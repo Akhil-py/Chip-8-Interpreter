@@ -1,6 +1,7 @@
 #include <cstdint>
 #include <iostream>
 #include <fstream>
+//#include "Window.cpp"
 using namespace std;
 
 class Chip8 {
@@ -8,7 +9,7 @@ class Chip8 {
         uint8_t memory[4096]{};
         uint32_t display[64 * 32]{}; // Monochrome display
         uint16_t pc{};
-        uint16_t index{};
+        uint16_t I{};
         uint16_t stack[16]{};
         uint8_t sp{}; // Stack pointer
         uint8_t delayTimer{}; // Decrements at 60Hz
@@ -23,7 +24,18 @@ class Chip8 {
         void loadRom(string ROM);
         void loadFonts();
 
+        /* OP Codes */
 };
+
+/**
+ * Constructor
+ */
+Chip8::Chip8() {
+    pc = START_ADDRESS;
+}
+
+
+/* Initialization functions */
 
 /**
  * Load the ROM into memory starting from address 0x200
@@ -81,11 +93,12 @@ void Chip8::loadFonts() {
     }
 }
 
+
 int main() {
     cout << "Starting" << endl;
     Chip8 chip8;
-    
-    chip8.loadRom("roms/IBM Logo.ch8");
+    chip8.loadRom("../roms/IBM Logo.ch8");
     chip8.loadFonts();
+
     return 0;
 }
